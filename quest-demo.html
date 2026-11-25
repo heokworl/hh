@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>길드 퀘스트 게시판</title>
+<style>
+:root{--ink:#f4f1e9;--muted:#aaa99f;--bg:#101312;--panel:#191e1b;--line:#303832;--gold:#d9b66d;--green:#b7d7ad;--red:#d98c79}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -12%,#354035 0,transparent 44%),var(--bg);color:var(--ink);font-family:Inter,Pretendard,"Noto Sans KR",sans-serif;display:grid;place-items:center;padding:26px}
+button{font:inherit}.shell{width:min(100%,740px)}.topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;letter-spacing:.17em;text-transform:uppercase;margin:0 0 22px}.sigil{color:var(--gold);font-size:19px}.panel{border:1px solid #485248;background:linear-gradient(145deg,rgba(34,42,36,.97),rgba(20,24,22,.98));box-shadow:0 26px 80px #0008;border-radius:20px;overflow:hidden}.hero{padding:54px 30px 49px;text-align:center;background:linear-gradient(0deg,#151a17e8,#151a17c9),radial-gradient(ellipse at 50% 15%,#b7a36955,transparent 65%);border-bottom:1px solid var(--line)}.eyebrow{font-size:11px;color:var(--gold);letter-spacing:.24em}.hero h1{font-family:Georgia,"Noto Serif KR",serif;font-size:clamp(32px,7vw,48px);font-weight:500;letter-spacing:.02em;margin:17px 0 10px}.hero p{margin:0;color:#c0c2b8;font-size:14px;line-height:1.8}.start{display:inline-flex;align-items:center;gap:12px;margin-top:30px;padding:15px 27px;border:1px solid #e2c982;background:var(--gold);color:#1e211a;border-radius:8px;font-weight:750;cursor:pointer;transition:.2s}.start:hover{transform:translateY(-2px);filter:brightness(1.07)}.start span{font-size:18px}.content{display:none;padding:28px}.content.visible{display:block;animation:arrive .35s ease}@keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.quest-head{display:flex;gap:18px;align-items:flex-start;justify-content:space-between}.tag{font-size:11px;color:var(--green);letter-spacing:.1em;border:1px solid #52634e;padding:6px 9px;border-radius:30px;white-space:nowrap}.quest-head h2{font-family:Georgia,"Noto Serif KR",serif;font-weight:500;font-size:clamp(23px,5vw,30px);margin:8px 0 0}.meta{color:var(--muted);font-size:13px;margin-top:9px}.rule{height:1px;background:var(--line);margin:23px 0}.desc{font-size:14px;color:#dedfd7;line-height:1.9;margin:0}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:23px 0}.fact{background:#111613;border:1px solid #303832;border-radius:10px;padding:14px}.fact small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.fact strong{font-size:14px;font-weight:650}.roster-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}.roster-top h3{font-size:14px;margin:0;font-weight:650}.count{font-size:13px;color:var(--gold)}.track{height:7px;border-radius:8px;background:#343a35;overflow:hidden}.fill{height:100%;width:33%;background:linear-gradient(90deg,#96b487,#d9c27d);border-radius:8px;transition:width .3s}.members{display:flex;gap:9px;margin:16px 0 23px}.member{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#343d35;border:1px solid #566353;color:#e9e6d6;font-size:13px}.member.empty{background:transparent;border:1px dashed #586057;color:#798078}.actions{display:flex;gap:10px}.join{flex:1;border:1px solid #c5d6b9;border-radius:8px;background:var(--green);color:#1a2118;padding:14px;font-weight:750;cursor:pointer;transition:.2s}.join:hover:not(:disabled){filter:brightness(1.07);transform:translateY(-1px)}.join:disabled{background:#333a34;border-color:#454d46;color:#858d84;cursor:not-allowed}.reset{padding:0 15px;border:1px solid #444d45;border-radius:8px;background:transparent;color:#b6bab0;cursor:pointer}.status{min-height:22px;margin:12px 0 0;color:var(--muted);font-size:12px;text-align:center}.status.full{color:#e4a18c}.note{text-align:center;color:#777e75;font-size:11px;margin:17px 0 0}.footer{display:flex;justify-content:space-between;padding:15px 20px;color:#858c82;font-size:11px;letter-spacing:.05em}.footer b{color:#c1c8b7;font-weight:500}@media(max-width:520px){body{padding:14px}.hero{padding:43px 20px}.content{padding:22px 18px}.facts{grid-template-columns:1fr 1fr}.facts .fact:last-child{grid-column:span 2}.footer{padding:13px 15px}.quest-head{gap:8px}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topline"><span><i class="sigil">✦</i> &nbsp;Adventure Guild</span><span>Quest board · 07</span></div>
+  <section class="panel">
+    <div class="hero" id="intro">
+      <div class="eyebrow">THE FRONTIER IS CALLING</div>
+      <h1>오늘의 의뢰</h1>
+      <p>길드 게시판에 새로운 퀘스트가 도착했습니다.<br>동료를 모아 함께 출발하세요.</p>
+      <button class="start" id="getQuest"><span>✦</span> 퀘스트 받기</button>
+    </div>
+    <div class="content" id="quest" aria-live="polite">
+      <div class="quest-head"><div><div class="tag">긴급 의뢰 · 탐사</div><h2>안개숲의 잃어버린 등불</h2><div class="meta">의뢰인: 북부 관문 관리인 · 보상: 1인당 120G</div></div><div class="sigil" aria-hidden="true">✧</div></div>
+      <div class="rule"></div>
+      <p class="desc">사흘 전부터 안개숲의 길잡이 등불이 꺼져, 숲을 지나던 상인들이 돌아오지 못하고 있습니다. 숲 가장자리의 낡은 초소를 확인하고 등불을 다시 밝혀 주세요. 해가 지기 전 복귀하는 것이 좋습니다.</p>
+      <div class="facts"><div class="fact"><small>난이도</small><strong>★★☆☆☆ 보통</strong></div><div class="fact"><small>예상 소요</small><strong>약 2시간</strong></div><div class="fact"><small>모집 인원</small><strong id="capacityText">1 / 3명</strong></div></div>
+      <div class="roster-top"><h3>함께 갈 동료</h3><span class="count" id="countLabel">1 / 3명 모집 중</span></div>
+      <div class="track" role="progressbar" aria-label="참여 인원" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><div class="fill" id="fill"></div></div>
+      <div class="members" id="members" aria-label="현재 참여자"></div>
+      <div class="actions"><button class="join" id="join">퀘스트 참여하기</button><button class="reset" id="reset" title="예시 다시 보기">초기화</button></div>
+      <p class="status" id="status">아직 자리가 남아 있어요. 동료를 모집 중입니다.</p>
+      <p class="note">이 예시는 한 브라우저 안에서 참여 인원을 시뮬레이션합니다.</p>
+    </div>
+    <div class="footer"><span>GUILD NOTICE</span><b>접수 마감 전까지 참여 가능</b></div>
+  </section>
+</main>
+<script>
+(() => {
+  const max=3; let joined=1;
+  const intro=document.querySelector('#intro'), quest=document.querySelector('#quest');
+  const join=document.querySelector('#join'), status=document.querySelector('#status');
+  const names=['린','도윤','세라'];
+  function render(){
+    const full=joined>=max;
+    document.querySelector('#capacityText').textContent=`${joined} / ${max}명`;
+    document.querySelector('#countLabel').textContent=full?'모집 마감':`${joined} / ${max}명 모집 중`;
+    document.querySelector('#fill').style.width=`${joined/max*100}%`;
+    document.querySelector('.track').setAttribute('aria-valuenow',joined);
+    const slots=Array.from({length:max},(_,i)=>`<div class="member ${i>=joined?'empty':''}" title="${i<joined?names[i]:'빈 자리'}">${i<joined?names[i]:'＋'}</div>`).join('');
+    document.querySelector('#members').innerHTML=slots;
+    join.disabled=full;
+    join.textContent=full?'모집 마감':'퀘스트 참여하기';
+    status.textContent=full?'모집 인원이 모두 찼습니다. 다음 퀘스트를 기다려 주세요.':'아직 자리가 남아 있어요. 동료를 모집 중입니다.';
+    status.classList.toggle('full',full);
+  }
+  document.querySelector('#getQuest').addEventListener('click',()=>{intro.style.display='none';quest.classList.add('visible');render()});
+  join.addEventListener('click',()=>{if(joined<max){joined++;render()}});
+  document.querySelector('#reset').addEventListener('click',()=>{joined=1;render()});
+})();
+</script>
+</body>
+</html>
